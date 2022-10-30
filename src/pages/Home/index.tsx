@@ -1,4 +1,3 @@
-// import IssueItem from "@/components/IssueItem";
 import IssueList from "@/lib/components/IssueList";
 import useIssueList from "@/lib/hooks/useIssueList";
 import { useCallback, useEffect } from "react";
