@@ -1,37 +1,27 @@
 import IssueList from "@/lib/components/IssueList";
+import useIntersect from "@/lib/hooks/useIntersection";
 import useIssueList from "@/lib/hooks/useIssueList";
-import { useCallback, useEffect } from "react";
-let timeoutId: NodeJS.Timeout;
+import styled from "styled-components";
 
 const Home = () => {
   const { loadMore, isEnd, isLoading } = useIssueList();
 
-  const onScroll = useCallback(() => {
+  const ref = useIntersect((entry, observer) => {
+    observer.unobserve(entry.target);
     if (!loadMore) return;
-    clearTimeout(timeoutId);
-    if (isEnd || isLoading) return;
-    timeoutId = setTimeout(() => {
-      if (
-        document.documentElement.scrollTop +
-          document.documentElement.clientHeight >=
-        document.documentElement.scrollHeight - 250
-      ) {
-        loadMore();
-      }
-    }, 300);
-  }, [isEnd, isLoading, timeoutId, loadMore]);
+    if (!isEnd && !isLoading) loadMore();
+  });
 
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
   return (
     <div>
       <IssueList />
+      <Target ref={ref} />
     </div>
   );
 };
 
 export default Home;
+
+const Target = styled.div`
+  height: 1px;
+`;
