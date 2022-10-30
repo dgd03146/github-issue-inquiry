@@ -56,4 +56,6 @@ class GithubRequestService {
   }
 }
 
-export default GithubRequestService;
+const TOKEN = process.env.REACT_APP_GITHUB_TOKEN as string;
+
+export default new GithubRequestService(TOKEN, "angular", "angular-cli");
