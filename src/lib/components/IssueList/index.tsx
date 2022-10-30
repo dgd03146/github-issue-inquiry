@@ -2,11 +2,10 @@ import { IssueContext } from "@/lib/store/IssueContextProvider";
 import AdImage from "../AdImage";
 import IssueItem from "../IssueItem";
 import LoadingBar from "../LoadingBar";
-import { IssueListWrapper } from "./styles";
 
 const IssueList = () => {
   return (
-    <IssueListWrapper>
+    <div>
       <IssueContext.Consumer>
         {({ issues, isLoading }) => {
           return (
@@ -26,7 +25,7 @@ const IssueList = () => {
           );
         }}
       </IssueContext.Consumer>
-    </IssueListWrapper>
+    </div>
   );
 };
 

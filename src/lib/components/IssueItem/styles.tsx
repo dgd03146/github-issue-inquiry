@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import theme from "@/lib/styles/theme";
 
 export const IssueWrapper = styled.li`
   border-top: 1px solid #d8dee4;
@@ -50,7 +51,29 @@ export const IssueTitleWrapper = styled.div`
       font-weight: 600;
     }
   }
+
+  @media ${theme.device.tablet} {
+    line-height: 20px;
+    gap: 5px;
+
+    & .issue-number {
+      margin-right: 5px;
+      font-size: 14px;
+      min-width: 45px;
+    }
+
+    & .issue-title {
+      font-size: 14px;
+    }
+
+    & .issue-info {
+      margin-top: 4px;
+      font-size: 13px;
+      line-height: 16px;
+    }
+  }
 `;
+
 export const IssueComments = styled(Link)`
   padding-right: 1rem;
   color: #57606a;
@@ -69,5 +92,15 @@ export const IssueComments = styled(Link)`
   & .comment-number {
     vertical-align: middle;
     font-size: 16px;
+  }
+
+  @media ${theme.device.tablet} {
+    padding-right: 0.2rem;
+    & svg {
+      font-size: 16px;
+    }
+    & .comment-number {
+      font-size: 14px;
+    }
   }
 `;
