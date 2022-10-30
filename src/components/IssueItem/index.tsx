@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { IssueComments, IssueTitleWrapper, IssueWrapper } from "./styles";
 import { GoComment } from "react-icons/go";
@@ -62,4 +62,4 @@ const IssueItem = ({
   );
 };
 
-export default memo(IssueItem);
+export default IssueItem;

@@ -11,8 +11,6 @@ const Detail = () => {
   const { issue_number } = useParams();
   const { isSuccess, isLoading, fetchData, data } = useGetDetail();
 
-  if (!isSuccess) return <div>데이터 없음</div>;
-
   const dateString = useMemo(() => {
     if (!data) return "";
     const date = new Date(data.created_at);
@@ -30,7 +28,7 @@ const Detail = () => {
   if (isLoading) {
     return <LoadingBar />;
   }
-
+  if (!isSuccess) return <div>데이터 없음</div>;
   return (
     <div>
       <TitleWrapper>
