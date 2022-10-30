@@ -1,57 +1,68 @@
-import LoadingBar from "@/lib/components/LoadingBar";
-import Markdown from "@/lib/components/Markdown";
-import useIssue from "@/lib/hooks/useIssue";
-import { useEffect, useMemo, useState } from "react";
+import LoadingBar from "@/components/LoadingBar";
+import Markdown from "@/components/Markdown";
+
+import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { ContentWrapper, TitleWrapper, UserWrapper } from "./styles";
-import { GoComment } from "react-icons/go";
+
+import useGetDetail from "@/lib/hooks/useGetIssue";
 
 const Detail = () => {
-  const { id } = useParams();
-  if (!id) return <div>데이터 없음</div>;
-  const { issue } = useIssue(id);
+  const { issue_number } = useParams();
+  const { isSuccess, isLoading, fetchData, data } = useGetDetail();
+
+  if (!isSuccess) return <div>데이터 없음</div>;
 
   const dateString = useMemo(() => {
-    if (!issue) return "";
-    const date = new Date(issue.created_at);
+    if (!data) return "";
+    const date = new Date(data.created_at);
     return `${date.getFullYear()}년 ${
       date.getMonth() + 1
     }월 ${date.getDate()}일`;
-  }, [issue]);
+  }, [data]);
 
-  if (!issue) return <LoadingBar />;
+  useEffect(() => {
+    if (issue_number) {
+      fetchData(Number(issue_number));
+    }
+  }, []);
+
+  if (isLoading) {
+    return <LoadingBar />;
+  }
+
   return (
     <div>
       <TitleWrapper>
         <UserWrapper>
           <div className="user_avatar">
-            <img src={issue.author_url} />
+            <img src={data?.user?.avatar_url} />
           </div>
         </UserWrapper>
         <div>
           <h1 className="title">
-            <span className="issue-number">#{issue.number}</span> {issue.title}
+            <span className="issue-number">#{data?.number}</span> {data?.title}
           </h1>
           <div className="info">
             <a
-              href={`https://github.com/${issue.author}`}
+              href={`https://github.com/${data?.user?.login}`}
               className="author"
               target="_blank"
               rel="noreferrer"
             >
-              @{issue.author}
+              @{data?.user?.login}
             </a>
             <span className="date">{dateString}</span>
 
             <div className="comments">
-              <span className="comment-number">{issue.comments} </span>
+              <span className="comment-number">{data?.comments} </span>
               comments
             </div>
           </div>
         </div>
       </TitleWrapper>
       <ContentWrapper>
-        <Markdown content={issue.body || ""} />
+        <Markdown content={data?.body || ""} />
       </ContentWrapper>
     </div>
   );

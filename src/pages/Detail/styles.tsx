@@ -1,3 +1,4 @@
+import theme from "@/lib/styles/theme";
 import styled from "styled-components";
 
 export const TitleWrapper = styled.div`
@@ -5,12 +6,12 @@ export const TitleWrapper = styled.div`
   padding: 1rem 0.5rem;
   gap: 16px;
   align-items: center;
+  position: relative;
 
   & .title {
     font-size: 28px;
     font-weight: 600;
     display: inline-block;
-    /* line-height: 32px; */
   }
 
   & .issue-number {
@@ -38,6 +39,47 @@ export const TitleWrapper = styled.div`
     color: #57606a;
     font-weight: 600;
   }
+
+  @media ${theme.device.tablet} {
+    padding: 0.8rem 0.5rem;
+
+    & .title {
+      font-size: 24px;
+      line-height: 27px;
+    }
+
+    & .info {
+      gap: 8px;
+    }
+
+    & .author {
+      font-size: 14px;
+      line-height: 16px;
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+
+    & .comments {
+      color: #57606a;
+      font-weight: 600;
+    }
+  }
+
+  @media ${theme.device.mobile} {
+    gap: 0;
+
+    & .title {
+      font-size: 20px;
+      line-height: 23px;
+      padding-left: 60px;
+    }
+    & .author {
+      font-size: 12px;
+    }
+    & .info {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const UserWrapper = styled.div`
@@ -50,12 +92,22 @@ export const UserWrapper = styled.div`
     vertical-align: middle;
     border-radius: 6px;
     flex-shrink: 0;
-    box-shadow: 0 0 0 1px #1b1f2426;
     border-radius: 50% !important;
 
     & img {
       width: 100%;
       vertical-align: middle;
+    }
+
+    @media ${theme.device.tablet} {
+      width: 60px;
+    }
+
+    @media ${theme.device.mobile} {
+      width: 40px;
+      position: absolute;
+      top: 19px;
+      left: 1rem;
     }
   }
 `;

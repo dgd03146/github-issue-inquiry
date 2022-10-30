@@ -1,38 +1,72 @@
-// import IssueItem from "@/components/IssueItem";
-import IssueList from "@/lib/components/IssueList";
-import useIssueList from "@/lib/hooks/useIssueList";
-import { useCallback, useEffect } from "react";
-let timeoutId: NodeJS.Timeout;
+import IssueList from "@/components/IssueList";
+import LoadingBar from "@/components/LoadingBar";
+import useGetIssueList from "@/lib/hooks/useGetIssueList";
+import useIntersect from "@/lib/hooks/useIntersection";
+import {
+  IssueListContextAPI,
+  PageNumberContextAPI
+} from "@/lib/store/IssueContextProvider";
+import { useContext, useEffect } from "react";
+
+import styled from "styled-components";
 
 const Home = () => {
-  const { loadMore, isEnd, isLoading } = useIssueList();
+  const { page, setPage } = useContext(PageNumberContextAPI);
+  const { setIssues } = useContext(IssueListContextAPI);
+  const { isSuccess, isError, isFetching, isLoading, fetchDatas, data } =
+    useGetIssueList();
 
-  const onScroll = useCallback(() => {
-    if (!loadMore) return;
-    clearTimeout(timeoutId);
-    if (isEnd || isLoading) return;
-    timeoutId = setTimeout(() => {
-      if (
-        document.documentElement.scrollTop +
-          document.documentElement.clientHeight >=
-        document.documentElement.scrollHeight - 250
-      ) {
-        loadMore();
+  const map = () => {
+    const issueList = data.map((issue) => ({
+      id: issue?.id,
+      number: issue?.number,
+      title: issue?.title,
+      user: {
+        id: issue?.user?.id,
+        login: issue?.user?.login,
+        avatar_url: issue?.user?.avatar_url,
+        url: issue?.user?.url
+      },
+      created_at: issue?.created_at,
+      comments: issue?.comments
+    }));
+    setIssues((pre) => [...pre, ...issueList]);
+  };
+
+  const observerRef = useIntersect(
+    async (entry, observer) => {
+      if (!isFetching) {
+        fetchDatas(page);
       }
-    }, 300);
-  }, [isEnd, isLoading, timeoutId, loadMore]);
+      observer.unobserve(entry.target);
+    },
+    { threshold: 1.0 }
+  );
 
   useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
+    if (isSuccess) {
+      setPage((pre) => pre + 1);
+      map();
+    }
+  }, [isSuccess]);
+
   return (
     <div>
-      <IssueList />
+      {isError ? (
+        <div>에러가 발생했습니다. 나중에 다시 시도해주세요.</div>
+      ) : (
+        <>
+          <IssueList />
+          {isLoading ? <LoadingBar /> : null}
+          <Target ref={observerRef} />
+        </>
+      )}
     </div>
   );
 };
 
 export default Home;
+
+const Target = styled.div`
+  height: 1px;
+`;

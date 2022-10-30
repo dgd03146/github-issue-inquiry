@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import GlobalStyle from "@/lib/styles/GlobalStyle";
-import IssueContextProvider from "./lib/store/IssueContextProvider";
+import { ContextAPIProvider } from "./lib/store/IssueContextProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,11 +11,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <IssueContextProvider>
+    <ContextAPIProvider>
       <BrowserRouter>
         <GlobalStyle />
         <App />
       </BrowserRouter>
-    </IssueContextProvider>
+    </ContextAPIProvider>
   </React.StrictMode>
 );

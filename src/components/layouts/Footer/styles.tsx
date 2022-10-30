@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const FooterWrapper = styled.footer`
-  background-color: darkorange;
-  height: 100px;
+  background-color: #b13138;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,5 +10,7 @@ export const FooterWrapper = styled.footer`
   & .made-by {
     color: #fff;
     font-size: 18px;
+    display: flex;
+    gap: 5px;
   }
 `;
