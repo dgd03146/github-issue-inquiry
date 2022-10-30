@@ -829,7 +829,7 @@ export const MarkdownStyle = css`
 
   & .highlight pre,
   & pre {
-    padding: 16px;
+    padding: 0px;
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;

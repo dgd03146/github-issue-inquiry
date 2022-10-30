@@ -4,9 +4,9 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <p className="made-by">
-        Made by
+        Made by <GoMarkGithub />{" "}
         <a href="https://github.com/rieulp" target="_blank" rel="noreferrer">
-          <GoMarkGithub /> RieulP
+          Team 4
         </a>
       </p>
     </FooterWrapper>
