@@ -4,7 +4,7 @@ const NotFound = () => {
   return (
     <NotFoundWrapper>
       <h1>NOT FOUND</h1>
-      <button>µÚ·Î°¡±â</button>
+      <button>ëŒì•„ê°€ê¸°</button>
     </NotFoundWrapper>
   );
 };
