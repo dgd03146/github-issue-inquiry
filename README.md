@@ -2,8 +2,7 @@
 
 ## 배포 링크
 
-TODO: 링크 넣어야함 작성다시해야함
-[데모]()
+<a href="https://starlit-snickerdoodle-9d0b9e.netlify.app" target="_blank">어플리케이션 바로가기</a>
 
 # 팀 소개
 
