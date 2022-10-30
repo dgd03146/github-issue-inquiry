@@ -1,4 +1,4 @@
-import { octokit } from "@/lib/api/octokit";
+import GithubRequestService from "@/lib/api/octokit";
 import { IIssue } from "@/lib/hooks/useIssueList";
 import { useCallback, useEffect } from "react";
 import { createContext, useState } from "react";
@@ -38,19 +38,24 @@ const IssueContextProvider = ({ children }: Props) => {
   const [isEnd, setEnd] = useState(false);
   const [details, setDetails] = useState(new Map<string, IIssueDetail>());
 
+  const githubToken = process.env.REACT_APP_GITHUB_TOKEN;
+
+  if (!githubToken) {
+    throw new Error("env 깃허브 토큰이 없습니다.");
+  }
+
+  const angularIssueFetcher = new GithubRequestService(
+    githubToken,
+    "angular",
+    "angular-cli"
+  );
+
   useEffect(() => {
     if (!isNeededUpdate) return;
     const getData = async () => {
       setLoading(true);
-      await octokit.rest.issues
-        .listForRepo({
-          owner: "angular",
-          repo: "angular-cli",
-          per_page: PER_PAGE,
-          page: page + 1,
-          state: "open",
-          sort: "comments"
-        })
+      await angularIssueFetcher
+        .getIssueList(page + 1, PER_PAGE)
         .then((res) => {
           if (res.status === 200) {
             if (res.data.length < PER_PAGE) setEnd(true);
@@ -93,12 +98,8 @@ const IssueContextProvider = ({ children }: Props) => {
 
   const getDetailData = useCallback(async (issue_number: string) => {
     if (!details.has(issue_number)) {
-      await octokit.rest.issues
-        .get({
-          owner: "angular",
-          repo: "angular-cli",
-          issue_number: parseInt(issue_number, 10)
-        })
+      await angularIssueFetcher
+        .getIssue(Number(issue_number))
         .then((res) => {
           if (res.status === 200) {
             const { number, title, user, created_at, comments, body } =
