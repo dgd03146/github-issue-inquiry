@@ -22,17 +22,21 @@
 
 ## 환경설정
 
-1. NodeJS 16.14.2에서 문제 없이 동작합니다.
-2. .env 파일을 만들고 다음과 같이 값을 넣으세요.
+1. NodeJS 16.14.2에서 실행하는 것을 권장합니다.
+2. .env 파일을 root 디렉토리에 만들고 다음과 같이 값을 넣으세요.
 
 ```.env
 REACT_APP_GITHUB_TOKEN=<your-key>
 ```
 
-## 실행 방법
-
+## 설치
 ```bash
 npm ci
+```
+
+## 실행
+
+```bash
 npm start
 ```
 
