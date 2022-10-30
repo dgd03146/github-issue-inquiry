@@ -1,4 +1,4 @@
-import IssueList from "@/lib/components/IssueList";
+import IssueList from "@/components/IssueList";
 import useIntersect from "@/lib/hooks/useIntersection";
 import useIssueList from "@/lib/hooks/useIssueList";
 import styled from "styled-components";

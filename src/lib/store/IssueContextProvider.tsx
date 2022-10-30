@@ -84,8 +84,7 @@ const IssueContextProvider = ({ children }: Props) => {
           }
         })
         .catch((err) => {
-          // TODO : 에러처리
-          console.log(err);
+          console.error(err);
         })
         .finally(() => {
           setLoading(false);
@@ -106,16 +105,6 @@ const IssueContextProvider = ({ children }: Props) => {
               res.data;
             if (user) {
               const { avatar_url, name, login } = user;
-              console.log({
-                number,
-                title,
-                avatar_url,
-                name,
-                login,
-                created_at,
-                comments,
-                body
-              });
 
               details.set(issue_number, {
                 author: login,
@@ -131,7 +120,7 @@ const IssueContextProvider = ({ children }: Props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
     return details.get(issue_number);

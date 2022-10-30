@@ -1,5 +1,5 @@
-import LoadingBar from "@/lib/components/LoadingBar";
-import Markdown from "@/lib/components/Markdown";
+import LoadingBar from "@/components/LoadingBar";
+import Markdown from "@/components/Markdown";
 import useIssue from "@/lib/hooks/useIssue";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
